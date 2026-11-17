@@ -1,0 +1,125 @@
+---
+title: MAESTRO
+description: Опишите задачу, и Maestro соберёт, запустит и улучшит reasoning-цепочку.
+template: splash
+hero:
+  tagline: Опишите задачу в приложении Maestro. Maestro сгенерирует reasoning-цепочку, запустит её на ваших данных, сохранит в Библиотеке и улучшит эволюцией с идеями из IdeaL.
+  image:
+    file: ../../../assets/evoc-mascot-square.webp
+  actions:
+    - text: Установить MAESTRO UI
+      link: '#установка-maestro-ui'
+      variant: primary
+    - text: CARL 0.5.2
+      link: carl/getting-started/overview/
+      variant: minimal
+    - text: IdeaL
+      link: ideal/getting-started/overview/
+      variant: minimal
+---
+
+import { Card, CardGrid, LinkCard } from '@astrojs/starlight/components';
+
+## Установка MAESTRO UI
+
+Проверьте [релизы MAESTRO UI](https://github.com/AIRI-MAESTRO/maestro-ui/releases). Если для вашей системы опубликована сборка, скачайте и распакуйте архив. На macOS перенесите `Maestro.app` в «Программы» и откройте его.
+
+<details>
+<summary>Запуск из исходников</summary>
+
+Понадобятся Git, Python 3.12 или 3.13, [uv](https://docs.astral.sh/uv/), Node.js и pnpm. Команды установят приложение, соберут среду выполнения агента и откроют окно MAESTRO UI.
+
+```bash
+git clone https://github.com/AIRI-MAESTRO/maestro-ui.git
+cd maestro-ui
+uv sync --extra desktop
+git clone https://github.com/deepseek-ai/deepseek-harness ../deepseek-harness
+git -C ../deepseek-harness checkout dd6322d604e00eec1ba5e0c8541159906a21094a
+pnpm -C ../deepseek-harness install --frozen-lockfile
+pnpm -C ../deepseek-harness run build
+uv run maestro app --dsh-source ../deepseek-harness
+```
+
+</details>
+
+## Первый агент
+
+1. Выберите папку проекта. В **Настройки → Модель чата** укажите провайдера, введите его API-ключ и выберите модель.
+2. В новой сессии опишите задачу и приведите пример: «Собери агента, который извлекает сумму и валюту из чека. Для строки „Итого 450 ₽“ ожидаю сумму 450 и валюту RUB».
+3. Ответьте на уточнения и подтвердите сборку. Затем попросите запустить агента на другом чеке и проверьте результат в чате.
+
+[Подробнее о работе в приложении](care/getting-started/quick-start/)
+
+## С чего начать
+
+<CardGrid>
+	<LinkCard
+		title="Maestro → приложение"
+		href="care/getting-started/overview/"
+		description="Десктопное приложение: опишите задачу в сессии, получите цепочку, запустите её, сохраните в Библиотеку и улучшите эволюцией. Здесь же CLI `care` и терминальный интерфейс."
+	/>
+	<LinkCard
+		title="CARL → формат и исполнение цепочек"
+		href="carl/getting-started/overview/"
+		description="Как цепочка устроена и исполняется: типизированные шаги (LLM, инструменты, код, Codex, Claude Code, map, wait и другие), зависимости, управление запуском."
+	/>
+	<LinkCard
+		title="MAGE → генерация цепочек"
+		href="mage/getting-started/overview/"
+		description="Генератор внутри Maestro: из задачи на обычном языке в проверенную цепочку CARL. Python API, CLI, интеграция с хостом."
+	/>
+	<LinkCard
+		title="Автобенч → данные для эволюции"
+		href="care/autobench/overview/"
+		description="Сгенерировать, проверить и версионировать набор оценок для цепочки, а потом эволюционировать её на нём."
+	/>
+	<LinkCard
+		title="IdeaL → озеро идей"
+		href="ideal/getting-started/overview/"
+		description="Хранилище конкретных идей по улучшению цепочек. Эволюция берёт оттуда идеи и сообщает, какие из них помогли."
+	/>
+	<LinkCard
+		title="Agent Skill → Maestro из вашего агента"
+		href="care/skill/overview/"
+		description="Claude Code, Codex, hermes или OpenClaw управляют Maestro: генерируют, запускают и эволюционируют цепочки."
+	/>
+</CardGrid>
+
+## Установка скилла агента
+
+Дайте Claude Code, Codex, hermes или OpenClaw скилл Maestro одной командой:
+
+```bash
+uvx maestro-install skill        # спросит агента; или --agent claude | codex | hermes | openclaw | all
+```
+
+Он скачивает и распаковывает скилл в каталог скиллов агента:
+
+- Claude Code → `~/.claude/skills/maestro`
+- Codex → `~/.codex/skills/maestro`
+- hermes → `~/.hermes/skills/maestro`
+- OpenClaw → `~/.openclaw/skills/maestro`
+
+Подробнее: [Agent Skill](care/skill/overview/) · [Установка и использование](care/skill/install/).
+
+## Как это связано
+
+<CardGrid>
+	<Card title="Maestro — продукт" icon="laptop">
+		Десктопное приложение и CLI `care`. В одной сессии идут генерация, запуски, исправление и эволюция.
+	</Card>
+	<Card title="MAGE — генерация" icon="seti:python">
+		Превращает задачу на естественном языке в цепочку CARL и проверяет, что её можно запустить.
+	</Card>
+	<Card title="CARL — формат и исполнение" icon="open-book">
+		Исполняет цепочку как типизированный DAG с параллельными шагами.
+	</Card>
+	<Card title="Память и IdeaL — что помнит Maestro" icon="document">
+		Библиотека хранит цепочки, наборы данных, инструменты и навыки, IdeaL хранит идеи для эволюции.
+	</Card>
+	<Card title="Платформа эволюции" icon="random">
+		Меняет цепочку на наборе данных, оставляет лучшую версию и сообщает, какие идеи сработали.
+	</Card>
+</CardGrid>
+
+Если коротко: **CARL — это формат, а Maestro — система, которая пишет, запускает и улучшает цепочки в этом формате.**

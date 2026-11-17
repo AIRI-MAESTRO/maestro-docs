@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://airi-maestro.github.io/maestro-docs/sitemap-index.xml
