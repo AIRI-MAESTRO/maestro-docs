@@ -1,0 +1,60 @@
+---
+title: MAESTRO
+description: Install the MAESTRO skill for your agent. Learn how CARL runs chains and how IdeaL helps you test ideas for improving them.
+template: splash
+hero:
+  tagline: MAESTRO turns a task description into a chain of steps you can run again on new inputs. CARL defines the chain format and runs those steps. IdeaL records ideas for improving a chain and the results of trying them.
+  image:
+    file: ../../assets/evoc-mascot-square.webp
+  actions:
+    - text: Install the MAESTRO skill
+      link: '#install-the-maestro-skill'
+      variant: primary
+    - text: CARL
+      link: carl/getting-started/overview/
+      variant: minimal
+    - text: IdeaL
+      link: ideal/getting-started/overview/
+      variant: minimal
+---
+
+## Install the MAESTRO skill
+
+The skill gives your agent instructions and scripts for using the MAESTRO CLI. With [uv](https://docs.astral.sh/uv/) installed, run this command and choose your agent — Claude Code, Codex, Hermes or OpenClaw.
+
+```bash
+uvx maestro-install skill
+```
+
+Open a new agent session and ask: “Use the MAESTRO skill. Show me how the CLI is launched and run `doctor --no-probes`.” You’ll see which CLI the skill found and which settings are present. This check works without a model key. To generate chains, ask your agent to help configure a workspace and connect a model provider. [Skill installation and setup](care/skill/install/)
+
+## How a chain works
+
+Suppose you need the total and currency from a receipt. One step reads the text, another extracts the values, and a third checks that the amount is a number. A **chain** describes those steps and specifies which results each step needs.
+
+- **CARL** defines the step types and their dependencies. At run time, CARL passes the text to the extraction step, then passes the amount to the check. **MAGE** can generate this chain from a task description. [CARL chains](carl/getting-started/overview/) · [Generation with MAGE](mage/getting-started/overview/)
+- **IdeaL** stores ideas about what to change. If the chain mistakes a discount for the total, one idea is to look for the amount next to “balance due.” During **evolution**, MAESTRO compares variants on receipts with known answers. IdeaL records which idea was tried and how the variants scored. [How IdeaL works](ideal/getting-started/how-it-works/) · [Prepare examples with Autobench](care/autobench/overview/)
+
+<span id="install-maestro-ui"></span>
+
+## Install the MAESTRO user interface
+
+Install Git, [uv](https://docs.astral.sh/uv/), Node.js 24 and pnpm. Then run the installer to download the MAESTRO user interface and build the agent runtime.
+
+```bash
+uvx maestro-install install
+```
+
+After installation, make sure `~/.local/bin` is on your `PATH` and launch the app:
+
+```bash
+maestro app
+```
+
+### Build your first agent in the app
+
+1. Choose a project folder. In **Settings → Chat model**, select a provider, enter its API key and choose a model.
+2. Start a session and give the agent a task and an example: “Build an agent that extracts the total and currency from a receipt. For ‘Total: $4.50 USD’, I expect an amount of 4.50 and a currency of USD.”
+3. Answer any follow-up questions and confirm the build. Ask the agent to run on a different receipt and check the result in the chat.
+
+[More about using the app](care/getting-started/quick-start/)

@@ -1,0 +1,88 @@
+/* CARE & CARL docs — brand theme.
+   Tokens mirror github.com/Glazkoff/maestro-page (AIRI aesthetic, mascot EVOC).
+   Themes: light = Warm Sand (#2a7d6f on #faf6ef), dark = Deep Crystal (#33d9b2 on #0f1115). */
+
+@import '@fontsource-variable/inter';
+
+:root {
+	--sl-font: 'Inter Variable', 'Segoe UI', system-ui, -apple-system, sans-serif;
+	--sl-font-mono: var(--sl-font);
+
+	/* radii / glow lifted from the landing; glow tracks the active accent */
+	--brand-radius-sm: 8px;
+	--brand-radius-md: 14px;
+	--brand-radius-lg: 22px;
+	--brand-glow: 0 0 40px color-mix(in srgb, var(--sl-color-accent) 30%, transparent);
+}
+
+/* Dark theme = Deep Crystal */
+:root {
+	--sl-color-accent-low: #16332f;
+	--sl-color-accent: #2ebfae;
+	--sl-color-accent-high: #9cebdd;
+	--sl-color-text-accent: #33d9b2;
+}
+
+/* Light theme = Warm Sand.
+   Warm taupe neutral scale (dark → light) so every derived surface — bg, text,
+   nav, sidebar, borders, inline-code — comes out warm instead of cool white. */
+:root[data-theme='light'] {
+	--sl-color-white: hsl(34, 16%, 13%);   /* darkest text / headings */
+	--sl-color-gray-1: hsl(34, 14%, 19%);
+	--sl-color-gray-2: hsl(34, 12%, 26%);  /* body text */
+	--sl-color-gray-3: hsl(33, 11%, 41%);  /* muted text */
+	--sl-color-gray-4: hsl(34, 14%, 60%);
+	--sl-color-gray-5: hsl(36, 24%, 79%);
+	--sl-color-gray-6: hsl(38, 40%, 89%);  /* borders + inline-code bg */
+	--sl-color-gray-7: hsl(40, 52%, 95%);  /* nav background */
+	--sl-color-black: hsl(40, 56%, 96%);   /* main background ≈ #faf6ef */
+
+	--sl-color-accent-low: #d3eae4;
+	--sl-color-accent: #2a7d6f;
+	--sl-color-accent-high: #173f38;
+	--sl-color-text-accent: #1f6358;
+}
+
+/* Hero buttons (CARE / CARL): static brand pills (ellipse) — no entrance animation. */
+.hero .sl-link-button {
+	border-radius: 999px;
+	font-weight: 700;
+	border: 2px solid var(--sl-color-accent);
+	/* Roomy horizontal padding so text clears the rounded pill ends. */
+	padding-inline: 1.9rem;
+	transition: background-color 0.2s ease, color 0.2s ease;
+}
+.hero .sl-link-button.primary {
+	background: var(--sl-color-accent);
+	color: #fff;
+}
+.hero .sl-link-button.minimal,
+.hero .sl-link-button.secondary {
+	background: transparent;
+	color: var(--sl-color-text-accent);
+}
+.hero .sl-link-button.minimal:hover,
+.hero .sl-link-button.minimal:focus-visible,
+.hero .sl-link-button.secondary:hover,
+.hero .sl-link-button.secondary:focus-visible {
+	background: var(--sl-color-accent);
+	color: #fff;
+}
+:root[data-theme='dark'] .hero .sl-link-button.primary,
+:root[data-theme='dark'] .hero .sl-link-button.minimal:hover,
+:root[data-theme='dark'] .hero .sl-link-button.minimal:focus-visible,
+:root[data-theme='dark'] .hero .sl-link-button.secondary:hover,
+:root[data-theme='dark'] .hero .sl-link-button.secondary:focus-visible {
+	color: #0f1115;
+}
+
+/* Hero mascot — show the whole sprite (don't crop the tail/feet).
+   Cap the size and center it in its column so the tail/fins keep clear of
+   the hero edge instead of sitting flush against it. */
+.hero img {
+	object-fit: contain;
+	max-height: none;
+	max-width: 300px;
+	height: auto;
+	margin-inline: auto;
+}
